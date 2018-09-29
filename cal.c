@@ -115,8 +115,8 @@ void printQuarters(int year, int month1, int month2, int month3)
     int record1 = 0;
     int record2 = 0;
     int record3 = 0;
-    bool numberInLine5Jan = true,numberInLine5Feb = true,numberInLine5Mar =true;
-    bool numberInLine6Jan = true,numberInLine6Feb = true,numberInLine6Mar = true;
+    bool numberInLine5Month1 = true,numberInLine5Month2 = true,numberInLine5Month3 =true;
+    bool numberInLine6Month1 = true,numberInLine6Month2 = true,numberInLine6Month3 = true;
     int recordForFebruary = 0;
         for(int k = 0;k<findStartDateInMonth(month1,year);k++){
             printf("   ");
@@ -194,8 +194,8 @@ void printQuarters(int year, int month1, int month2, int month3)
             printf("%3d",i);
             if(i == daysInMonth[month2]){
                 recordForFebruary = i;
-                numberInLine5Feb = false;
-                numberInLine6Feb = false;
+                numberInLine5Month2 = false;
+                numberInLine6Month2 = false;
                 break;
             }
         }
@@ -213,7 +213,7 @@ void printQuarters(int year, int month1, int month2, int month3)
             printf("%3d",i);
             if(i == daysInMonth[month1]){
                 record1 = i;
-                numberInLine6Jan = false;
+                numberInLine6Month1 = false;
                 break;
             }
         }
@@ -224,11 +224,11 @@ void printQuarters(int year, int month1, int month2, int month3)
         else if(record1+6> daysInMonth[month1]){
             printf(" ");
             spacingLeft = 7 - (int)((findStartDateInMonth(month1,year) +daysInMonth[month1] ) % 7);
-            if(spacingLeft == 7 && numberInLine5Jan == false){
+            if(spacingLeft == 7 && numberInLine5Month1 == false){
                 spacingLeft = 0;
                 printf("                    ");
             }
-            else if(spacingLeft == 7 && numberInLine5Jan == true){
+            else if(spacingLeft == 7 && numberInLine5Month1 == true){
                 spacingLeft = 0;
             }
             if(spacingLeft>0){
@@ -242,7 +242,7 @@ void printQuarters(int year, int month1, int month2, int month3)
                 printf("%3d",i);
                 if(i == daysInMonth[month2]){
                     record2 = i;
-                    numberInLine6Feb = false;
+                    numberInLine6Month2 = false;
                     break;
                 }
             }
@@ -255,14 +255,14 @@ void printQuarters(int year, int month1, int month2, int month3)
             printf(" ");
             spacingLeft = 7 - (int)((findStartDateInMonth(month2,year) +daysInMonth[month2] ) % 7);
             //printf("%d",spacingLeft);
-            if(!numberInLine5Feb){
+            if(!numberInLine5Month2){
                 printf(" ");
             }
-            if(spacingLeft == 7 && numberInLine5Feb == false){
+            if(spacingLeft == 7 && numberInLine5Month2 == false){
                 spacingLeft = 0;
                 printf("                    ");
             }
-            else if(spacingLeft == 7 && numberInLine5Feb == true){
+            else if(spacingLeft == 7 && numberInLine5Month2 == true){
                 spacingLeft = 0;
             }
             if(spacingLeft>0){
@@ -275,14 +275,14 @@ void printQuarters(int year, int month1, int month2, int month3)
                 printf("%3d",i);
                 if(i == daysInMonth[month3]){
                     record3 = i;
-                    numberInLine6Mar = false;
+                    numberInLine6Month3 = false;
                     break;
             }
         }
         //printf("%d  %d   %d",record1,record2,record3);
         printf("\n");
         //sixth lines(if there is possible...)
-        if(numberInLine6Jan){
+        if(numberInLine6Month1){
             for(int i = record1+7;i<record1+14;i++){
                 printf("%3d",i);
                 if(i == daysInMonth[month1]){
@@ -291,8 +291,8 @@ void printQuarters(int year, int month1, int month2, int month3)
                 }
             }
         }
-        if(numberInLine6Feb){
-            if(!numberInLine6Jan)
+        if(numberInLine6Month2){
+            if(!numberInLine6Month1)
                 printf("                     ");
             printf(" ");
             for(int i = record2+7;i<record2+14;i++){
@@ -304,7 +304,7 @@ void printQuarters(int year, int month1, int month2, int month3)
             }
         }
 
-        if(numberInLine6Mar){
+        if(numberInLine6Month3){
             printf("                                            ");
             for(int i = record3+7;i<record3+14;i++){
                 printf("%3d",i);
@@ -372,6 +372,9 @@ int main(int argc, char *argv[])
                         }
                     }
                 }
+                else if(isInteger(argv[3]) && atoi(argv[3])>12){
+                    printf("cal: %d is neither a month number (1..12) nor a name\n",atoi(argv[3]));
+                }
                 else{
                     checkLeapYears(cur.currentYear);
                     printHeader(atoi(argv[3]),cur.currentYear);
@@ -402,8 +405,8 @@ int main(int argc, char *argv[])
                 month = atoi(argv[2]);
                 printTheRest(atoi(argv[3]));
             }
-            else{
-                printf("cal: %d is neither a month number (1..12) nor a name\n",month);
+            else if(isInteger(argv[2]) && atoi(argv[2])>12){
+                printf("cal: %d is neither a month number (1..12) nor a name\n",atoi(argv[3]));
             }
         }
         // input "cal -m month year";
@@ -432,8 +435,8 @@ int main(int argc, char *argv[])
                 month = atoi(argv[3]);
                 printTheRest(atoi(argv[4]));
             }
-            else{
-                printf("cal: %d is neither a month number (1..12) nor a name\n",month);
+            else if(isInteger(argv[3]) && atoi(argv[3])>12){
+                printf("cal: %d is neither a month number (1..12) nor a name\n",atoi(argv[3]));
             }
         }
         else{
